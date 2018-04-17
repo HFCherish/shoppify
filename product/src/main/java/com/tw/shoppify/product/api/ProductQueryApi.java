@@ -7,8 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
+
+import static com.tw.shoppify.product.infrastructure.dto.ProductExampleFactory.productOfStoreExample;
 
 /**
  * @author hf_cherish
@@ -21,7 +24,7 @@ public class ProductQueryApi {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Product> getAll() {
-        return productRepo.findAll();
+    public List<Product> getAll(@QueryParam("store") String storeName) {
+        return productRepo.findAll(productOfStoreExample(storeName));
     }
 }

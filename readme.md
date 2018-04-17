@@ -8,7 +8,7 @@
 ## product service: sor - 60'
 * POST /stores/{storeName}/products - 30' : 48'
 	* 201 and save
-* GET /products - 20'
+* GET /products - 20' : 43'
 	* 200 get
 	* get by store
 * GET /products/{id} - 10'

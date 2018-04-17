@@ -7,7 +7,9 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.HashMap;
+import java.util.List;
 
+import static java.util.Arrays.asList;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.text.MatchesPattern.matchesPattern;
 
@@ -44,15 +46,31 @@ public class ProductsApiTest extends ApiSupport {
 
     @Test
     public void should_200_get_products() {
-        Product save = productRepo.save(new Product("name", "store"));
+        List<Product> saved = asList(
+                new Product("name", "store"),
+                new Product("name1", "store"),
+                new Product("name", "store1"));
+        productRepo.saveAll(saved);
+
         myGiven()
                 .when()
                 .get("/products")
 
                 .then()
                 .statusCode(200)
-                .body("id.size", is(1));
+                .body("id.size", is(3));
 
-        productRepo.deleteById(save.getId());
+
+        myGiven()
+                .queryParam("store", "store")
+
+                .when()
+                .get("/products")
+
+                .then()
+                .statusCode(200)
+                .body("id.size", is(2));
+
+        productRepo.deleteAll(saved);
     }
 }

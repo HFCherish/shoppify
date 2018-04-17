@@ -18,7 +18,7 @@ import static io.restassured.RestAssured.given;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = ProductApp.class, webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @ActiveProfiles("dev")
-public class ApiSupport {
+public abstract class ApiSupport {
 
     @BeforeClass
     public static void setUp() {
