@@ -1,12 +1,14 @@
 package com.tw.shoppify.product.api;
 
 import com.tw.shoppify.product.ApiSupport;
+import com.tw.shoppify.product.domain.Product;
 import com.tw.shoppify.product.domain.ProductRepo;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.HashMap;
 
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.text.MatchesPattern.matchesPattern;
 
 /**
@@ -38,5 +40,19 @@ public class ProductsApiTest extends ApiSupport {
         String productId = split[split.length - 1];
 
         productRepo.deleteById(productId);
+    }
+
+    @Test
+    public void should_200_get_products() {
+        Product save = productRepo.save(new Product("name", "store"));
+        myGiven()
+                .when()
+                .get("/products")
+
+                .then()
+                .statusCode(200)
+                .body("id.size", is(1));
+
+        productRepo.deleteById(save.getId());
     }
 }

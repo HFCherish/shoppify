@@ -6,7 +6,7 @@
 # Tasks(28.5h)
 
 ## product service: sor - 60'
-* POST /stores/{storeName}/products - 30'
+* POST /stores/{storeName}/products - 30' : 48'
 	* 201 and save
 * GET /products - 20'
 	* 200 get
