@@ -1,4 +1,4 @@
-package com.tw.shoppify.pricing;
+package com.tw.shoppify.pricing.conf;
 
 import org.glassfish.jersey.server.ResourceConfig;
 import org.springframework.stereotype.Component;

@@ -26,7 +26,7 @@ public abstract class ApiSupport {
         RestAssured.port = 8002;
     }
 
-    public static RequestSpecification myGiven() {
+    public RequestSpecification myGiven() {
         return given()
                 .contentType(ContentType.JSON);
     }

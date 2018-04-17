@@ -1,7 +1,7 @@
 package com.tw.shoppify.pricing.api;
 
+import com.tw.shoppify.pricing.appservice.PricingService;
 import com.tw.shoppify.pricing.domain.Pricing;
-import com.tw.shoppify.pricing.domain.PricingRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.ws.rs.Consumes;
@@ -19,7 +19,7 @@ import java.net.URI;
 @Path("/products/{productId}/pricings")
 public class PricingApi {
     @Autowired
-    PricingRepo pricingRepo;
+    PricingService pricingService;
 
     @Autowired
     Routes routes;
@@ -28,10 +28,12 @@ public class PricingApi {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response pricing(
             @PathParam("productId") String productId,
-            Pricing pricing) {
+            Pricing pricing) throws Exception {
 
-        Pricing save = pricingRepo.save(new Pricing(productId, pricing.getValue()));
+
+        Pricing save = pricingService.save(productId, pricing);
 
         return Response.created(URI.create(routes.pricingUrl(save))).build();
     }
+
 }
