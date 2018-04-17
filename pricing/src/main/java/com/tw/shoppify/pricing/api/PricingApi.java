@@ -1,6 +1,8 @@
 package com.tw.shoppify.pricing.api;
 
 import com.tw.shoppify.pricing.domain.Pricing;
+import com.tw.shoppify.pricing.domain.PricingRepo;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
@@ -16,11 +18,20 @@ import java.net.URI;
  */
 @Path("/products/{productId}/pricings")
 public class PricingApi {
+    @Autowired
+    PricingRepo pricingRepo;
+
+    @Autowired
+    Routes routes;
+
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response pricing(
             @PathParam("productId") String productId,
             Pricing pricing) {
-        return Response.created(URI.create(productId + pricing.getValue())).build();
+
+        Pricing save = pricingRepo.save(new Pricing(productId, pricing.getValue()));
+
+        return Response.created(URI.create(routes.pricingUrl(save))).build();
     }
 }

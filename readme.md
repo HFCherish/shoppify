@@ -16,7 +16,7 @@
 
 ## product pricing service: sor - 130'
 * POST /products/{id}/pricings - 30'
-	* 201 & save
+	* 201 & save - 28'
 	* check product exists
 * GET /products/{id}/pricings - 20'
 	* 200 & get

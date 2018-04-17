@@ -1,6 +1,6 @@
 package com.tw.shoppify.product.domain;
 
-import com.tw.shoppify.product.domain.util.IdGenerator;
+import com.tw.stringutils.IdGenerator;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;

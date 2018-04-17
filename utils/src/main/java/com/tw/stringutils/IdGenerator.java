@@ -1,4 +1,4 @@
-package com.tw.shoppify.product.domain.util;
+package com.tw.stringutils;
 
 import java.util.UUID;
 
