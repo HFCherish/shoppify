@@ -4,3 +4,5 @@ spring:
     url: jdbc:mysql://localhost:3306/products?useSSL=false
     username: mysql
     password: mysql
+  flyway:
+    locations: classpath:db/migration,sql/data

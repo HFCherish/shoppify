@@ -1,6 +1,6 @@
 package com.tw.shoppify.pricing.appservice;
 
-import com.tw.shoppify.pricing.appservice.gateway.ProductGate;
+import com.tw.shoppify.pricing.appservice.gateway.ProductGateWay;
 import com.tw.shoppify.pricing.domain.Pricing;
 import com.tw.shoppify.pricing.domain.PricingRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,11 +18,11 @@ public class PricingService {
     PricingRepo pricingRepo;
 
     @Autowired
-    ProductGate productGate;
+    ProductGateWay productGateWay;
 
     // TODO: 4/17/18 process exception
     public Pricing save(String productId, Pricing pricing) throws Exception {
-        productGate.findById(productId).orElseThrow(() -> new NotFoundException("product not exists"));
+        productGateWay.findById(productId).orElseThrow(() -> new NotFoundException("product not exists"));
         return pricingRepo.save(new Pricing(productId, pricing.getValue()));
     }
 }

@@ -24,7 +24,7 @@ import static org.mockserver.model.HttpResponse.response;
  * @author hf_cherish
  * @date 4/17/18
  */
-public class PricingApiMockTest extends ApiSupport {
+public class PricingApiTest extends ApiSupport {
     @Autowired
     PricingRepo pricingRepo;
 
@@ -93,22 +93,4 @@ public class PricingApiMockTest extends ApiSupport {
 
     }
 
-//    private static String createProduct() {
-//        String location = myGiven()
-//                .body(new HashMap() {{
-//                    put("name", "productName");
-//                }})
-//
-//                .when()
-//                .post("/stores/mystore/products")
-//
-//                .then()
-//                .statusCode(201)
-//
-//                .extract()
-//                .header("Location");
-//
-//        String[] split = location.split("/");
-//        return split[split.length - 1];
-//    }
 }

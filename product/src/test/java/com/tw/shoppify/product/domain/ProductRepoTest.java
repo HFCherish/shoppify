@@ -42,7 +42,7 @@ public class ProductRepoTest {
         assertThat(store1Prods.size(), is(1));
 
         List<Product> allProds = productRepo.findAll(productOfStoreExample(null));
-        assertThat(allProds.size(), is(3));
+        assertThat(allProds.size() >= 3, is(true));
 
         productRepo.deleteAll(saved);
     }

@@ -11,6 +11,7 @@ import java.util.List;
 
 import static java.util.Arrays.asList;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.text.MatchesPattern.matchesPattern;
 
 /**
@@ -58,7 +59,7 @@ public class ProductsApiTest extends ApiSupport {
 
                 .then()
                 .statusCode(200)
-                .body("id.size", is(3));
+                .body("id.size", greaterThan(3));
 
 
         myGiven()

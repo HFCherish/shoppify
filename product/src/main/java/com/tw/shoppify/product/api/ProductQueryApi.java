@@ -29,6 +29,6 @@ public class ProductQueryApi {
     @Path("/{productId}")
     @Produces(MediaType.APPLICATION_JSON)
     public Product getOne(@PathParam("productId") String productId) {
-        return productRepo.findById(productId).orElseThrow(() -> new RuntimeException("product " + productId + " not exists"));
+        return productRepo.findById(productId).orElseThrow(() -> new NotFoundException("product " + productId + " not exists"));
     }
 }
