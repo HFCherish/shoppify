@@ -1,10 +1,8 @@
 package com.tw.shoppify.product.api;
 
 import com.tw.shoppify.product.ApiSupport;
-import io.restassured.http.ContentType;
 import org.junit.Test;
 
-import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.containsString;
 
 /**
@@ -14,8 +12,7 @@ import static org.hamcrest.CoreMatchers.containsString;
 public class EchoApiTest extends ApiSupport {
     @Test
     public void should_say_hello() {
-        given()
-                .contentType(ContentType.JSON)
+        myGiven()
 
                 .when()
                 .get("/echo")
@@ -24,4 +21,5 @@ public class EchoApiTest extends ApiSupport {
                 .statusCode(200)
                 .body(containsString("hello"));
     }
+
 }
