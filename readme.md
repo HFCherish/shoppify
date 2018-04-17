@@ -11,7 +11,7 @@
 * GET /products - 20' : 43'
 	* 200 get
 	* get by store
-* GET /products/{id} - 10'
+* GET /products/{id} - 10' : 7'
 	* 200 get
 
 ## product pricing service: sor - 130'

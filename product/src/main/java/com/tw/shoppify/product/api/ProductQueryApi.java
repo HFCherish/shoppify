@@ -4,10 +4,7 @@ import com.tw.shoppify.product.domain.Product;
 import com.tw.shoppify.product.domain.ProductRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 
@@ -26,5 +23,12 @@ public class ProductQueryApi {
     @Produces(MediaType.APPLICATION_JSON)
     public List<Product> getAll(@QueryParam("store") String storeName) {
         return productRepo.findAll(productOfStoreExample(storeName));
+    }
+
+    @GET
+    @Path("/{productId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Product getOne(@PathParam("productId") String productId) {
+        return productRepo.findById(productId).orElseThrow(() -> new RuntimeException("product " + productId + " not exists"));
     }
 }

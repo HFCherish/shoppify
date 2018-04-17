@@ -73,4 +73,22 @@ public class ProductsApiTest extends ApiSupport {
 
         productRepo.deleteAll(saved);
     }
+
+    @Test
+    public void should_get_detail_of_product() {
+        Product save = productRepo.save(new Product("name", "store"));
+
+        myGiven()
+                .when()
+                .get("/products/" + save.getId())
+
+                .then()
+                .statusCode(200)
+                .body("id", is(save.getId()))
+                .body("name", is(save.getName()))
+                .body("store", is(save.getStore()));
+
+        productRepo.deleteById(save.getId());
+    }
+
 }
