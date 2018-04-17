@@ -20,6 +20,7 @@ import static io.restassured.RestAssured.given;
 @ActiveProfiles("dev")
 public abstract class ApiSupport {
 
+
     @BeforeClass
     public static void setUp() {
         RestAssured.port = 8002;
