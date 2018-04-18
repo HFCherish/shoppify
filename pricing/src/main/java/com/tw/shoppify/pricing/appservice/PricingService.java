@@ -6,6 +6,8 @@ import com.tw.shoppify.pricing.domain.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @author hf_cherish
  * @date 4/17/18
@@ -17,5 +19,9 @@ public class PricingService {
 
     public Pricing save(Product product, Pricing pricing) {
         return pricingRepo.save(new Pricing(product.getId(), pricing.getValue()));
+    }
+
+    public List<Pricing> findAll(Product product) {
+        return pricingRepo.findByProductId(product.getId());
     }
 }
