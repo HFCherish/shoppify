@@ -1,7 +1,7 @@
 package com.tw.shoppify.inventory;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
+import com.tw.shoppify.inventory.appservice.Product;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
@@ -47,8 +47,8 @@ public abstract class ApiTest {
                 .contentType(ContentType.JSON);
     }
 
-    protected void setProductExists(JSONObject product) {
-        whenGetProduct(product.getString("id"))
+    protected void setProductExists(Product product) {
+        whenGetProduct(product.getId())
                 .respond(
                         response()
                                 .withHeader(new Header(CONTENT_TYPE, MediaType.APPLICATION_JSON))

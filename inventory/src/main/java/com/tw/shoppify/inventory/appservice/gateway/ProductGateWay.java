@@ -1,6 +1,7 @@
 package com.tw.shoppify.inventory.appservice.gateway;
 
 import com.alibaba.fastjson.JSONObject;
+import com.tw.shoppify.inventory.appservice.Product;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpStatusCodeException;
@@ -21,11 +22,11 @@ public class ProductGateWay {
         this.restTemplate = new RestTemplate();
     }
 
-    public Optional<JSONObject> findById(String productId) {
+    public Optional<Product> findById(String productId) {
 
         try {
             ResponseEntity<JSONObject> getProduct = restTemplate.getForEntity("http://localhost:8001/products/" + productId, JSONObject.class);
-            return Optional.of(getProduct.getBody());
+            return Optional.of(new Product(getProduct.getBody()));
         } catch (HttpStatusCodeException e) {
             if (e.getStatusCode().is4xxClientError()) {
                 return Optional.empty();

@@ -27,7 +27,7 @@
 	* can return the product info at the same time - 30' : 18'
 
 ## product inventory service: sor - 80'
-* POST /products/{id}/inventories - 30'
+* POST /products/{id}/inventories - 30' : 27'
 	* 201 & save
 	* check product exists
 * POST /outbound-orders - 30'

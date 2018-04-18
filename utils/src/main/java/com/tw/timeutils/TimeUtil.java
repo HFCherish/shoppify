@@ -1,4 +1,4 @@
-package com.tw.shoppify.inventory.domain.util;
+package com.tw.timeutils;
 
 import java.time.Instant;
 import java.util.concurrent.TimeUnit;

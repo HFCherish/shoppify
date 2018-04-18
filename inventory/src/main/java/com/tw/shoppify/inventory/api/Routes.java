@@ -1,5 +1,6 @@
 package com.tw.shoppify.inventory.api;
 
+import com.tw.shoppify.inventory.domain.Inventory;
 import org.springframework.stereotype.Component;
 
 /**
@@ -8,7 +9,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class Routes {
-//    public String pricingUrl(Pricing pricing) {
-//        return "/products/" + pricing.getProductId() + "/pricings/" + pricing.getId();
-//    }
+    public String inventoryUrl(Inventory inventory) {
+        return "/inventories/" + inventory.getId();
+    }
 }
