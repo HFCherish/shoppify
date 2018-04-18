@@ -17,4 +17,6 @@ public interface PricingRepo extends JpaRepository<Pricing, String> {
     @Query(value = "select * from pricings where id in ( select SUBSTRING_INDEX(GROUP_CONCAT(id order by create_at DESC), ',', 1) id from pricings group by product_id )",
             nativeQuery = true)
     List<Pricing> findLatestPricings();
+
+    List<Pricing> findFirstByProductIdOrderByCreateAtDesc(String productId);
 }

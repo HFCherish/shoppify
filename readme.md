@@ -22,8 +22,8 @@
 	* 200 & get
 	* check product exists
 * GET /pricings/current
-	* 200 & get - 30'
-	* get by product id - 20'
+	* 200 & get - 30' : 90'
+	* get by product id - 20' : 40'
 	* can return the product info at the same time - 30'
 
 ## product inventory service: sor - 80'

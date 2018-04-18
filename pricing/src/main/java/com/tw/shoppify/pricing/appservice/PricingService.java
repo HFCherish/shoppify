@@ -1,5 +1,6 @@
 package com.tw.shoppify.pricing.appservice;
 
+import com.mysql.jdbc.StringUtils;
 import com.tw.shoppify.pricing.domain.Pricing;
 import com.tw.shoppify.pricing.domain.PricingRepo;
 import com.tw.shoppify.pricing.domain.Product;
@@ -27,8 +28,8 @@ public class PricingService {
         return pricingRepo.findByProductId(product.getId());
     }
 
-    public List<ProductCurrentPricing> findLatestPricings() {
-        List<Pricing> pricings = pricingRepo.findLatestPricings();
+    public List<ProductCurrentPricing> findLatestPricings(String productId) {
+        List<Pricing> pricings = StringUtils.isNullOrEmpty(productId) ? pricingRepo.findLatestPricings() : pricingRepo.findFirstByProductIdOrderByCreateAtDesc(productId);
         return pricings.stream()
                 .map(p -> new ProductCurrentPricing(new Product(p.getProductId()), p))
                 .collect(Collectors.toList());

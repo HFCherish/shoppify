@@ -11,8 +11,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.tw.shoppify.pricing.TestSupport.preparePricings_current_13_5_and_10;
+import static com.tw.shoppify.pricing.TestSupport.preparePricings_current_10_and_13_5;
 import static org.hamcrest.CoreMatchers.hasItems;
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.number.OrderingComparison.greaterThanOrEqualTo;
 import static org.junit.Assert.assertThat;
 
@@ -30,15 +31,18 @@ public class PricingRepoTest {
 
     @Test
     public void should_find_current_pricing_right() throws InterruptedException {
-        List<Pricing> savedPricings = preparePricings_current_13_5_and_10();
+        List<Pricing> savedPricings = preparePricings_current_10_and_13_5();
         pricingRepo.saveAll(savedPricings);
 
-
+// without productId
         List<Pricing> latestPricings = pricingRepo.findLatestPricings();
-
-
         assertThat(latestPricings.size(), greaterThanOrEqualTo(2));
-        assertThat(latestPricings.stream().map(Pricing::getValue).collect(Collectors.toList()), hasItems(13.5, 10.0));
+        assertThat(latestPricings.stream().map(Pricing::getValue).collect(Collectors.toList()), hasItems(13.5d, 10.0d));
+
+// with productId
+        List<Pricing> byProduct = pricingRepo.findFirstByProductIdOrderByCreateAtDesc(savedPricings.get(0).getProductId());
+        assertThat(byProduct.size(), is(1));
+        assertThat(byProduct.get(0).getValue(), is(10.0d));
 
         pricingRepo.deleteAll(savedPricings);
     }
