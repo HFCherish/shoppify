@@ -24,7 +24,7 @@
 * GET /pricings/current
 	* 200 & get - 30' : 90'
 	* get by product id - 20' : 40'
-	* can return the product info at the same time - 30'
+	* can return the product info at the same time - 30' : 18'
 
 ## product inventory service: sor - 80'
 * POST /products/{id}/inventories - 30'

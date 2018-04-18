@@ -23,7 +23,7 @@ public class ProductApi {
     private ResourceContext resourceContext;
 
     @Path("/{productId}")
-    public PricingApi getProduct(@PathParam("productId") String productId) throws Exception {
+    public PricingApi getProduct(@PathParam("productId") String productId) {
         return productGateWay.findById(productId)
                 .map(resourceContext.getResource(PricingApi.class)::setProduct)
                 .orElseThrow(() -> new NotFoundException("product not exists"));

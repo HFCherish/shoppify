@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
 
+import javax.ws.rs.InternalServerErrorException;
 import java.util.Optional;
 
 /**
@@ -20,7 +21,7 @@ public class ProductGateWay {
         this.restTemplate = new RestTemplate();
     }
 
-    public Optional<Product> findById(String productId) throws Exception {
+    public Optional<Product> findById(String productId) {
 
         try {
             ResponseEntity<Product> getProduct = restTemplate.getForEntity("http://localhost:8001/products/" + productId, Product.class);
@@ -31,7 +32,7 @@ public class ProductGateWay {
             }
 
             if (e.getStatusCode().is5xxServerError()) {
-                throw new Exception("products service down");
+                throw new InternalServerErrorException("products service down");
             }
         }
 

@@ -1,6 +1,7 @@
 package com.tw.shoppify.pricing.appservice;
 
 import com.mysql.jdbc.StringUtils;
+import com.tw.shoppify.pricing.appservice.gateway.ProductGateWay;
 import com.tw.shoppify.pricing.domain.Pricing;
 import com.tw.shoppify.pricing.domain.PricingRepo;
 import com.tw.shoppify.pricing.domain.Product;
@@ -20,6 +21,9 @@ public class PricingService {
     @Autowired
     PricingRepo pricingRepo;
 
+    @Autowired
+    ProductGateWay productGateWay;
+
     public Pricing save(Product product, Pricing pricing) {
         return pricingRepo.save(new Pricing(product.getId(), pricing.getValue()));
     }
@@ -28,10 +32,10 @@ public class PricingService {
         return pricingRepo.findByProductId(product.getId());
     }
 
-    public List<ProductCurrentPricing> findLatestPricings(String productId) {
+    public List<ProductCurrentPricing> findLatestPricings(String productId, Boolean getProductDetail) {
         List<Pricing> pricings = StringUtils.isNullOrEmpty(productId) ? pricingRepo.findLatestPricings() : pricingRepo.findFirstByProductIdOrderByCreateAtDesc(productId);
         return pricings.stream()
-                .map(p -> new ProductCurrentPricing(new Product(p.getProductId()), p))
+                .map(p -> new ProductCurrentPricing(getProductDetail ? productGateWay.findById(p.getProductId()).get() : new Product(p.getProductId()), p))
                 .collect(Collectors.toList());
     }
 }

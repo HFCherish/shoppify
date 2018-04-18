@@ -25,13 +25,13 @@ public class ProductGateWayTest {
     }
 
     @Test
-    public void should_empty_when_find_not_exists() throws Exception {
+    public void should_empty_when_find_not_exists() {
         Optional<Product> notExist = productGateWay.findById("notExist");
         assertThat(notExist.isPresent(), is(false));
     }
 
     @Test
-    public void should_find_right_when_exists() throws Exception {
+    public void should_find_right_when_exists() {
         Optional<Product> byId = productGateWay.findById("111");
         assertThat(byId.isPresent(), is(true));
         assertThat(byId.get().getId(), is("111"));

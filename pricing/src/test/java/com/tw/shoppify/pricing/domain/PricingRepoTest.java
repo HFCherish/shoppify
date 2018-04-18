@@ -31,7 +31,7 @@ public class PricingRepoTest {
 
     @Test
     public void should_find_current_pricing_right() throws InterruptedException {
-        List<Pricing> savedPricings = preparePricings_current_10_and_13_5();
+        List<Pricing> savedPricings = preparePricings_current_10_and_13_5(new Product("name1", "store"), new Product("name2", "store"));
         pricingRepo.saveAll(savedPricings);
 
 // without productId
