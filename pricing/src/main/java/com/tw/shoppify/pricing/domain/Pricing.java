@@ -1,12 +1,12 @@
 package com.tw.shoppify.pricing.domain;
 
+import com.tw.shoppify.pricing.domain.util.TimeUtil;
 import com.tw.stringutils.IdGenerator;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.time.Instant;
 
 /**
  * @author hf_cherish
@@ -35,7 +35,7 @@ public class Pricing {
         this.productId = productId;
         this.value = value;
         this.id = IdGenerator.next();
-        this.createAt = Instant.now().toEpochMilli();
+        this.createAt = TimeUtil.currentTime();
     }
 
     private Pricing() {
