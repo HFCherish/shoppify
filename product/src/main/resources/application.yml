@@ -1,8 +1,12 @@
 server:
   port: 8001
 spring:
-  datasource:
-    driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://${DB_HOST}:${DB_PORT}/${DB_NAME}?useSSL=false
-    username: ${DB_USER}
-    password: ${DB_PASS}
+  application:
+      name: products
+  profiles:
+    active: dev
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8000/eureka/
