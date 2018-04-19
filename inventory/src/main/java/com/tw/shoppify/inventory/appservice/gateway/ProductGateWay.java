@@ -8,6 +8,7 @@ import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
 
 import javax.ws.rs.InternalServerErrorException;
+import javax.ws.rs.NotFoundException;
 import java.util.Optional;
 
 /**
@@ -38,5 +39,9 @@ public class ProductGateWay {
         }
 
         return Optional.empty();
+    }
+
+    public Product findByIdWithException(String productId) {
+        return findById(productId).orElseThrow(() -> new NotFoundException("product not exists"));
     }
 }

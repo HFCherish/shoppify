@@ -13,7 +13,6 @@ import java.util.List;
 import static java.util.Arrays.asList;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.text.MatchesPattern.matchesPattern;
-import static org.mockserver.model.HttpResponse.response;
 
 /**
  * @author hf_cherish
@@ -24,7 +23,7 @@ public class PricingApiTest extends ApiTest {
     PricingRepo pricingRepo;
 
     @Test
-    public void should_201_pricing() throws Exception {
+    public void should_201_pricing() {
         Product product = new Product("test", "test_store");
         setProductExists(product);
 
@@ -51,11 +50,7 @@ public class PricingApiTest extends ApiTest {
 
     @Test
     public void should_404_when_pricing_for_product_not_exists() throws Exception {
-        whenGetProduct("notExistId")
-                .respond(
-                        response()
-                                .withStatusCode(404)
-                );
+        setProductNotExist("notExistId");
 
         myGiven()
                 .body(new HashMap() {{

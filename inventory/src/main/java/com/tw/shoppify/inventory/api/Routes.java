@@ -1,6 +1,7 @@
 package com.tw.shoppify.inventory.api;
 
 import com.tw.shoppify.inventory.domain.Inventory;
+import com.tw.shoppify.inventory.domain.OutboundOrder;
 import org.springframework.stereotype.Component;
 
 /**
@@ -11,5 +12,9 @@ import org.springframework.stereotype.Component;
 public class Routes {
     public String inventoryUrl(Inventory inventory) {
         return "/inventories/" + inventory.getId();
+    }
+
+    public String outboundOrderUrl(OutboundOrder outboundOrder) {
+        return "/outbound-orders/" + outboundOrder.getId();
     }
 }

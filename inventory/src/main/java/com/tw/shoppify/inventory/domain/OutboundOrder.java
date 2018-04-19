@@ -1,17 +1,13 @@
 package com.tw.shoppify.inventory.domain;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tw.stringutils.IdGenerator;
 import com.tw.timeutils.TimeUtil;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.ws.rs.WebApplicationException;
-import javax.ws.rs.core.Response;
+import javax.persistence.*;
 
 import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.ANY;
 import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.NONE;
@@ -23,17 +19,29 @@ import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.NONE;
 @JsonAutoDetect(fieldVisibility = ANY, getterVisibility = NONE, isGetterVisibility = NONE)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Entity
-@Table(name = "inventories")
-public class Inventory {
+@Table(name = "outbound_orders")
+public class OutboundOrder {
     @Id
     private String id;
+
     @Column(name = "product_id")
     @JsonProperty("product_id")
     private String productId;
-    private int amount;
+
+    @Column(name = "orderitem_id")
+    @JsonProperty("orderitem_id")
+    private String orderitemId;
+
+    private int quantity;
+
     @Column(name = "create_at")
     @JsonProperty("create_at")
     private Long createAt;
+
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "previous_inventory_id")
+    private Inventory previousInventory;
 
     public String getId() {
         return id;
@@ -43,32 +51,23 @@ public class Inventory {
         return productId;
     }
 
-    public Inventory(String productId, Integer amount) {
+    public OutboundOrder(String productId, Integer quantity, String orderitemId, Inventory previousInventory) {
         this.productId = productId;
-        this.amount = amount;
+        this.quantity = quantity;
+        this.orderitemId = orderitemId;
+        this.previousInventory = previousInventory;
         this.id = IdGenerator.next();
         this.createAt = TimeUtil.currentTime();
     }
 
-    public static Inventory emptyInventory(String productId) {
-        Inventory inventory = new Inventory();
-        inventory.productId = productId;
-        inventory.amount = 0;
-        inventory.createAt = TimeUtil.currentTime();
-        return inventory;
+    private OutboundOrder() {
     }
 
-    protected Inventory() {
+    public int getQuantity() {
+        return quantity;
     }
 
-    public int getAmount() {
-        return amount;
-    }
-
-    public Inventory outbound(int quantity) {
-        if (amount < quantity) {
-            throw new WebApplicationException("product is out of stock", Response.Status.CONFLICT);
-        }
-        return new Inventory(productId, amount - quantity);
+    public OutboundOrder withPreviousInventory(Inventory previousInventory) {
+        return new OutboundOrder(productId, quantity, orderitemId, previousInventory);
     }
 }

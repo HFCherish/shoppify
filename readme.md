@@ -32,9 +32,10 @@
 	* check product exists
 * GET /products/{id}/inventories/current - 20' : 40'
 	* 200 & get
-* POST /outbound-orders - 30'
+* POST /outbound-orders - 30' : 40'
 	* 201 & save
 	* save new inventory
+	* 409 when out of stock
 
 ## dockerize - 260'
 * product service

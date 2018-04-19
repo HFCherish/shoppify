@@ -64,4 +64,12 @@ public abstract class ApiTest {
                         .withPath("/products/" + productId)
         );
     }
+
+    protected void setProductNotExist(String productId) {
+        whenGetProduct(productId)
+                .respond(
+                        response()
+                                .withStatusCode(404)
+                );
+    }
 }
