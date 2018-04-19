@@ -22,6 +22,10 @@ public class InventoryService {
         return inventoryRepo.save(new Inventory(product.getId(), inventory.getAmount()));
     }
 
+    public Inventory findCurrentInventory(Product product) {
+        return inventoryRepo.findFirstByProductIdOrderByCreateAtDesc(product.getId()).orElse(Inventory.emptyInventory(product.getId()));
+    }
+
 //    public List<Pricing> findAll(Product product) {
 //        return inventoryRepo.findByProductId(product.getId());
 //    }

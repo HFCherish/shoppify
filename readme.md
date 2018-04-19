@@ -30,10 +30,11 @@
 * POST /products/{id}/inventories - 30' : 27'
 	* 201 & save
 	* check product exists
-* POST /outbound-orders - 30'
-* GET /products/{id}/inventories/current - 20'
+* GET /products/{id}/inventories/current - 20' : 40'
 	* 200 & get
-	* can return the product info at the same time
+* POST /outbound-orders - 30'
+	* 201 & save
+	* save new inventory
 
 ## dockerize - 260'
 * product service

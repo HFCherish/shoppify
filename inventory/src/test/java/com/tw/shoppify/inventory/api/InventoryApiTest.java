@@ -2,12 +2,17 @@ package com.tw.shoppify.inventory.api;
 
 import com.tw.shoppify.inventory.ApiTest;
 import com.tw.shoppify.inventory.appservice.Product;
+import com.tw.shoppify.inventory.domain.Inventory;
 import com.tw.shoppify.inventory.domain.InventoryRepo;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.HashMap;
+import java.util.List;
 
+import static com.tw.shoppify.inventory.TestSupport.prepareInventories_13_12_11;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.text.MatchesPattern.matchesPattern;
 import static org.mockserver.model.HttpResponse.response;
 
@@ -70,25 +75,25 @@ public class InventoryApiTest extends ApiTest {
         return "/products/" + productId + "/inventories";
     }
 
-//    @Test
-//    public void should_200_get_all() {
-//        Product product = new Product("name", "store");
-//        setProductExists(product);
-//        List<Inventory> savedPricings = asList(
-//                new Inventory(product.getId(), 34.2),
-//                new Inventory(product.getId(), 26.3),
-//                new Inventory(product.getId(), 13.5)
-//        );
-//        inventoryRepo.saveAll(savedPricings);
-//
-//        myGiven()
-//                .when()
-//                .get(inventoriesUrl(product.getId()))
-//
-//                .then()
-//                .statusCode(200)
-//                .body("value.size", is(3));
-//
-//        inventoryRepo.deleteAll(savedPricings);
-//    }
+    @Test
+    public void should_get_product_current_inventory() throws InterruptedException {
+        Product product = new Product("name1", "store");
+        setProductExists(product);
+        List<Inventory> inventories = prepareInventories_13_12_11(product);
+        inventoryRepo.saveAll(inventories);
+
+        myGiven()
+                .when()
+                .get(inventoriesUrl(product.getId()) + "/current")
+
+                .then()
+                .statusCode(200)
+                .body("product_id", is(product.getId()))
+                .body("amount", is(11))
+                .body("id", is(notNullValue()))
+                .body("create_at", is(notNullValue()));
+
+        inventoryRepo.deleteAll(inventories);
+    }
+
 }
