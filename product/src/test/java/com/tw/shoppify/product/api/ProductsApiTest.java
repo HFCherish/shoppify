@@ -3,6 +3,7 @@ package com.tw.shoppify.product.api;
 import com.tw.shoppify.product.ApiSupport;
 import com.tw.shoppify.product.domain.Product;
 import com.tw.shoppify.product.domain.ProductRepo;
+import com.tw.timeutils.TimeUtil;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -47,9 +48,10 @@ public class ProductsApiTest extends ApiSupport {
 
     @Test
     public void should_200_get_products() {
+        String store = "store" + TimeUtil.currentTime();
         List<Product> saved = asList(
-                new Product("name", "store"),
-                new Product("name1", "store"),
+                new Product("name", store),
+                new Product("name1", store),
                 new Product("name", "store1"));
         productRepo.saveAll(saved);
 
@@ -63,7 +65,7 @@ public class ProductsApiTest extends ApiSupport {
 
 
         myGiven()
-                .queryParam("store", "store")
+                .queryParam("store", store)
 
                 .when()
                 .get("/products")

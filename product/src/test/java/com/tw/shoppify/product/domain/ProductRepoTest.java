@@ -1,6 +1,7 @@
 package com.tw.shoppify.product.domain;
 
 import com.tw.shoppify.product.ProductApp;
+import com.tw.timeutils.TimeUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,16 +30,18 @@ public class ProductRepoTest {
     // TODO: 4/17/18 use @SqlGroup to prepare and clear
     @Test
     public void should_query_by_store_right() {
+        String store = "store" + TimeUtil.currentTime();
+        String store1 = "store1" + TimeUtil.currentTime();
         List<Product> saved = asList(
-                new Product("name", "store"),
-                new Product("name1", "store"),
-                new Product("name", "store1"));
+                new Product("name", store),
+                new Product("name1", store),
+                new Product("name", store1));
         productRepo.saveAll(saved);
 
-        List<Product> storeProds = productRepo.findAll(productOfStoreExample("store"));
+        List<Product> storeProds = productRepo.findAll(productOfStoreExample(store));
         assertThat(storeProds.size(), is(2));
 
-        List<Product> store1Prods = productRepo.findAll(productOfStoreExample("store1"));
+        List<Product> store1Prods = productRepo.findAll(productOfStoreExample(store1));
         assertThat(store1Prods.size(), is(1));
 
         List<Product> allProds = productRepo.findAll(productOfStoreExample(null));
