@@ -4,9 +4,9 @@ spring:
   application:
       name: products
   profiles:
-    active: dev
+    active: prod
 
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://localhost:8000/eureka/
+      defaultZone: http://${EUREKA_HOST}:${EUREKA_PORT}/eureka/

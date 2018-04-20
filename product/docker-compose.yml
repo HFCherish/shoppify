@@ -1,0 +1,35 @@
+version: '3.1'
+services:
+  web:
+    build: .
+    ports:
+     - "8001:8001"
+    links:
+      - product_db
+      - eurekaserver
+    environment:
+      EUREKA_HOST: eurekaserver
+      EUREKA_PORT: 8000
+      DB_HOST: product_db
+      DB_PORT: 3306
+      DB_USER: mysql
+      DB_PASS: mysql
+      DB_NAME: products
+
+  product_db:
+    image: tutum/mysql
+    restart: always
+    environment:
+      MYSQL_USER: mysql
+      MYSQL_PASS: mysql
+      ON_CREATE_DB: products
+    expose:
+      - "3306"
+
+  eurekaserver:
+    image: eurekaserver
+    ports:
+      - "8000:8000"
+    environment:
+      EUREKA_HOST: eurekaserver
+
