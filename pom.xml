@@ -10,8 +10,8 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>utils</module>
-        <module>eurekaserver</module>
         <module>microservice</module>
+        <module>eureka-server</module>
     </modules>
 
     <properties>

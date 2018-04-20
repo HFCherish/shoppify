@@ -1,8 +1,18 @@
 server:
   port: 8002
 spring:
-  datasource:
-    driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://${DB_HOST}:${DB_PORT}/${DB_NAME}?useSSL=false
-    username: ${DB_USER}
-    password: ${DB_PASS}
+  application:
+      name: pricing
+  profiles:
+    active: prod
+
+#eureka:
+#  instance:
+#    statusPageUrlPath: ${management.context-path}/echo
+#    healthCheckUrlPath: ${management.context-path}/echo
+#    home-page-url-path: ${management.context-path}/
+#    lease-renewal-interval-in-seconds: 10
+#  client:
+#    healthcheck:
+#      enabled: true
+#    registryFetchIntervalSeconds: 5

@@ -2,6 +2,7 @@ version: '3.1'
 services:
   web:
     build: .
+    image: product_service
     ports:
      - "8001:8001"
     links:

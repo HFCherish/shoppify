@@ -4,5 +4,7 @@ spring:
     url: jdbc:mysql://localhost:3306/pricings?useSSL=false
     username: mysql
     password: mysql
-#  cache:
-#    type: none
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8000/eureka/
