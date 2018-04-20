@@ -1,7 +1,10 @@
 package com.tw.shoppify.inventory.appservice.gateway;
 
 import com.alibaba.fastjson.JSONObject;
+import com.mysql.jdbc.StringUtils;
+import com.netflix.discovery.EurekaClient;
 import com.tw.shoppify.inventory.appservice.Product;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpStatusCodeException;
@@ -23,10 +26,24 @@ public class ProductGateWay {
         this.restTemplate = new RestTemplate();
     }
 
+    @Autowired
+    EurekaClient discoveryClient;
+
+    public String baseUrl() {
+        String productService = System.getenv("PRODUCT_SERVICE_NAME");
+        return StringUtils.isNullOrEmpty(productService) || discoveryClient == null ?
+                "http://localhost:8001" :
+                discoveryClient.getNextServerFromEureka(productService, false).getHomePageUrl();
+    }
+
+    public String productUrl(String path) {
+        return baseUrl() + path;
+    }
+
     public Optional<Product> findById(String productId) {
 
         try {
-            ResponseEntity<JSONObject> getProduct = restTemplate.getForEntity("http://localhost:8001/products/" + productId, JSONObject.class);
+            ResponseEntity<JSONObject> getProduct = restTemplate.getForEntity(productUrl("/products/" + productId), JSONObject.class);
             return Optional.of(new Product(getProduct.getBody()));
         } catch (HttpStatusCodeException e) {
             if (e.getStatusCode().is4xxClientError()) {

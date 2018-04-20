@@ -1,8 +1,7 @@
 server:
   port: 8003
 spring:
-  datasource:
-    driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://${DB_HOST}:${DB_PORT}/${DB_NAME}?useSSL=false
-    username: ${DB_USER}
-    password: ${DB_PASS}
+  application:
+      name: inventory
+  profiles:
+    active: prod
